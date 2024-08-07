@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'page/center_fab_example.dart';
 import 'page/custom_stream_example.dart';
@@ -14,7 +15,9 @@ import 'page/selectable_distance_filter_example.dart';
 // import 'page/animation_debugger.dart';
 // import 'page/stream_debugger.dart';
 
-void main() {
+void main() async {
+  await dotenv.load();
+
   runApp(
     MaterialApp(
       home: Home(),

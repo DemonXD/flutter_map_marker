@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter_compass/flutter_compass.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:sensors_plus/sensors_plus.dart';
 
 import '../exceptions/incorrect_setup_exception.dart';
 import '../exceptions/permission_denied_exception.dart' as lm;
@@ -137,26 +137,24 @@ class LocationMarkerDataStreamFactory {
   /// Cast to a heading stream from
   /// [flutter_compass](https://pub.dev/packages/flutter_compass) stream.
   Stream<LocationMarkerHeading?> fromCompassHeadingStream({
-    Stream<CompassEvent?>? stream,
+    Stream<GyroscopeEvent?>? stream,
     double minAccuracy = pi * 0.1,
     double defAccuracy = pi * 0.3,
     double maxAccuracy = pi * 0.4,
   }) =>
       (stream ?? defaultHeadingStreamSource())
-          .where((e) => e == null || e.heading != null)
+          .where((e) => e == null || e.x != 0.0)
           .map(
             (e) => e != null
                 ? LocationMarkerHeading(
-                    heading: degToRadian(e.heading!),
-                    accuracy: e.accuracy != null
-                        ? degToRadian(e.accuracy!)
-                            .clamp(minAccuracy, maxAccuracy)
-                        : defAccuracy,
+                    heading: degToRadian(e.x),
+                    accuracy: defAccuracy,
                   )
                 : null,
           );
 
   /// Create a heading stream which is used as default value of
   /// [CurrentLocationLayer.headingStream].
-  Stream<CompassEvent?> defaultHeadingStreamSource() => FlutterCompass.events!;
+  Stream<GyroscopeEvent?> defaultHeadingStreamSource() =>
+      gyroscopeEventStream();
 }

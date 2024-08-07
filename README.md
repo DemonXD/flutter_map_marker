@@ -1,14 +1,14 @@
 # flutter_map_location_marker
-
+<!-- 
 [![pub package](https://img.shields.io/pub/v/flutter_map_location_marker)](https://pub.dartlang.org/packages/flutter_map_location_marker)
-[![github tag](https://img.shields.io/github/v/tag/tlserver/flutter_map_location_marker?include_prereleases&sort=semver)](https://github.com/tlserver/flutter_map_location_marker)
-[![license](https://img.shields.io/github/license/tlserver/flutter_map_location_marker)](https://github.com/tlserver/flutter_map_location_marker/blob/master/LICENSE)
+[![github tag](https://img.shields.io/github/v/tag/tlserver/flutter_map_location_marker?include_prereleases&sort=semver)](https://github.com/tlserver/flutter_map_location_marker) -->
+[![license](https://img.shields.io/github/license/DemonXD/flutter_map_marker)](https://github.com/DemonXD/flutter_map_marker/blob/master/LICENSE)
 
-`flutter_map_location_marker` is a [flutter_map](https://pub.dev/packages/flutter_map) plugin for
+`flutter_map_marker` is a plugin for
 displaying device's current location on a map. It provides a simple and flexible way to add a 
 customizable location marker to your map.
 <br>
-<img src="https://github.com/tlserver/flutter_map_location_marker/raw/main/assets/interface.jpg" alt="Interface preview" width="400">
+<img src="https://github.com/DemonXD/flutter_map_marker/raw/main/assets/interface.jpg" alt="Interface preview" width="400">
 
 Join [flutter_map Discord server](https://discord.gg/BwpEsjqMAH) to talk
 about `flutter_map_location_marker`, get help and help others in the #plugins channel.
@@ -49,8 +49,18 @@ about `flutter_map_location_marker`, get help and help others in the #plugins ch
      return FlutterMap(
        children: [
          TileLayer(
-           urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-           maxZoom: 19,
+           urlTemplate:
+                    "http://{s}.tianditu.gov.cn/vec_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=vec&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&tk=${dotenv.env['map_key']",subdomains: const [
+                  't0',
+                  't1',
+                  't2',
+                  't3',
+                  't4',
+                  't5',
+                  't6',
+                  't7'
+                ],
+           maxZoom: 18,
          ),
          CurrentLocationLayer(), // <-- add layer here
        ],
